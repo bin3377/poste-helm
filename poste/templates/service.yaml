@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "poste.fullname" . }}
+  labels:
+    {{- include "poste.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 25
+      targetPort: smtp
+      protocol: TCP
+      name: smtp
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+    - port: 110
+      targetPort: pop3
+      protocol: TCP
+      name: pop3
+    - port: 143
+      targetPort: imap
+      protocol: TCP
+      name: imap
+    - port: 465
+      targetPort: smtps
+      protocol: TCP
+      name: smtps
+    - port: 587
+      targetPort: submission
+      protocol: TCP
+      name: submission
+    - port: 993
+      targetPort: imaps
+      protocol: TCP
+      name: imaps
+    - port: 995
+      targetPort: pop3s
+      protocol: TCP
+      name: pop3s
+    - port: 4190
+      targetPort: sieve
+      protocol: TCP
+      name: sieve
+  selector:
+    {{- include "poste.selectorLabels" . | nindent 4 }}
